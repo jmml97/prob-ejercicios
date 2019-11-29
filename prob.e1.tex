@@ -176,6 +176,16 @@
         &= \sum_{i=1}^n \operatorname{E}[a_iX_i + b_i]\\
         &< \infty,
     \end{align*} puesto que al existir dichas esperanzas por hipótesis, tenemos una suma de términos finitos.
+
+    Ahora, para ver que se da dicha igualdad observamos que \begin{align*}
+      \operatorname{E}&\left[\sum_{i=1}^n a_iX_i + b_i\right] \\
+        &= \int_{\mathbb R^n}\sum_{i=1}^n (a_ix_i + b_i) f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\\
+        &= \sum_{i=1}^n\left(\int_{\mathbb R^n} (a_ix_i + b_i) f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\right)\\
+        &= \sum_{i=1}^n\left(\int_{\mathbb R^n} a_ix_if_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n + \int_{\mathbb R^n} b_if_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\right)\\
+        &= \sum_{i=1}^n\left(a_i\int_{\mathbb R^n}x_if_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n + b_i\int_{\mathbb R^n} f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\right),
+    \end{align*} donde la integral que multiplica a cada \(a_i\) es \(\operatorname{E}[X_i]\), y la que multiplica a \(b_i\), la integral de la función de densidad ---cuyo valor es \(1\) por definición---. En consecuencia, tenemos que \[
+      \operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right] = \sum_{i=1}^n\left(a_i \operatorname{E}[X_i] + b_i\right),
+    \] como queríamos.
   \end{enumerate}
 \end{sol}
 
