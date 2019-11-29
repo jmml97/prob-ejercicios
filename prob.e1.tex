@@ -18,6 +18,10 @@
 
 \usepackage[es-noindentfirst, es-tabla]{babel}
 
+% Citas de texto en línea/bloque
+
+\usepackage[autostyle]{csquotes}
+
 % Matemáticas
 
 \usepackage{amsmath, amsthm, amssymb}
@@ -153,14 +157,25 @@
 
 \begin{ejer}
   Demuestra las siguientes propiedades de la esperanza matemática de vectores aleatorios: \begin{enumerate}
-    \item Linealidad.
-    \item Conservación del orden.
+    \item Linealidad. Sea \(\symbf{X} = (X_1, \dots, X_n)\) un vector aleatorio tal que existe \(\operatorname{E}[X_i]\) para todo \(i = 1, \dots, n\) y para cualesquiera \((a_1, \dots, a_n), (b_1, \dots, b_n) \in \mathbb R^n\) existe además \(\operatorname{E}[a_iX_i + b_i]\) para todo \(i = 1, \dots, n\). Entonces se tiene que \[
+      \exists \operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right] =  \sum_{i=1}^{n}a_i \operatorname{E}[X_i] + b_i\,.
+    \]
+    \item Monotonía.
   \end{enumerate}
 \end{ejer}
 
 \begin{sol}
   Vemos la solución por apartados. \begin{enumerate}
-    \item Tal.
+    \item Comenzamos probando la existencia. Que exista \(\operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right]\) equivale a que \[
+      \int_{\mathbb R^n}\left|\sum_{i=1}^n a_ix_i + b_i\right| f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n < \infty.
+    \] Aplicando la desigualdad triangular llegamos a que \begin{align*}
+      \int_{\mathbb R^n}&\left|\sum_{i=1}^n a_ix_i + b_i\right| f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\\
+        &\leq \int_{\mathbb R^n}\left(\sum_{i=1}^n \left|a_ix_i + b_i\right|\right) f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\\
+        \intertext{y como la integral de la suma es la suma de las integrales,}
+        &= \sum_{i=1}^n\int_{\mathbb R^n}\left|a_ix_i + b_i\right| f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\\
+        &= \sum_{i=1}^n \operatorname{E}[a_iX_i + b_i]\\
+        &< \infty,
+    \end{align*} puesto que al existir dichas esperanzas por hipótesis, tenemos una suma de términos finitos.
   \end{enumerate}
 \end{sol}
 
