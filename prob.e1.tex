@@ -193,26 +193,47 @@
       \operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right] = \sum_{i=1}^n\left(a_i \operatorname{E}[X_i] + b_i\right),
     \] como queríamos.
 
-    En el caso discreto, 
+    En el caso discreto ---\(P(\symbf X \in E_{\symbf X})  =  1\), siendo \(E_{\symbf X} \subset \mathbb R\) numerable---, que exista la esperanza \(\operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right]\) equivale a que \[
+      \sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}}\left|\sum_{i=1}^n a_ix_i + b_i\right| f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n < \infty.
+    \] 
+    Aplicando la desigualdad triangular llegamos a que \begin{align*}
+      \sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}}&\left|\sum_{i=1}^n a_ix_i + b_i\right| p_X(x_1, \dots, x_n)\\
+        &\leq \sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}}\left(\sum_{i=1}^n \left|a_ix_i + b_i\right| p_X(x_1, \dots, x_n)\right)\\
+        &= \sum_{i=1}^n\left(\sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}}\left|a_ix_i + b_i\right| p_X(x_1, \dots, x_n)\right)\\
+        &= \sum_{i=1}^n \operatorname{E}[a_iX_i + b_i]\\
+        &< \infty,
+    \end{align*} puesto que al existir dichas esperanzas por hipótesis, tenemos una suma de términos finitos.
+
+    Ahora, para ver que se da dicha igualdad observamos que \begin{align*}
+      \operatorname{E}&\left[\sum_{i=1}^n a_iX_i + b_i\right] \\
+        &= \sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}}\left(\sum_{i=1}^n (a_ix_i + b_i) p_X(x_1, \dots, x_n)\right)\\
+        &= \sum_{i=1}^n\left(\sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}} (a_ix_i + b_i) p_X(x_1, \dots, x_n)\right)\\
+        &= \sum_{i=1}^n\left(\sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}} a_ix_ip_X(x_1, \dots, x_n) + \sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}} b_ip_X(x_1, \dots, x_n)\right)\\
+        &= \sum_{i=1}^n\left(a_i\sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}}x_ip_X(x_1, \dots, x_n) + b_i\sum_{(x_1, \dots,\, x_n) \in E_{\symbf X}} p_X(x_1, \dots, x_n)\right),
+    \end{align*} donde la suma que multiplica a cada \(a_i\) es \(\operatorname{E}[X_i]\), y la que multiplica a \(b_i\), la suma de los valores de la función masa de probabilidad ---cuyo valor es \(1\) por definición---. 
+    En consecuencia, tenemos que \[
+      \operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right] = \sum_{i=1}^n\left(a_i \operatorname{E}[X_i] + b_i\right),
+    \] como queríamos.
   
     \item
       \begin{enumerate}
         \item Caso continuo: Suponemos que \(\symbf{X} = (X_1, X_2)\) es un vector aleatorio continuo y \(f_X(x_1, x_2)\) su función de densidad. 
-        Utilizando que \(X_1 \leq X_2\) y que si \(x_1 > x_2\) se tiene que \(f_X(x_1, x_2) = 0\) y calculando las respectivas esperanzas llegamos a al resultado que buscamos
+        Utilizando que \(X_1 \leq X_2\) y que si \(x_1 > x_2\) se tiene que \(f_X(x_1, x_2) = 0\), y calculando las respectivas esperanzas, llegamos a al resultado que buscamos
           \begin{align*}
             \operatorname{E}[X_1] &= \int_{\left\{(x_1, x_2) : x_1 \leq x_2\right\}} x_1 f_X (x_1, x_2) \dif x_1 \dif x_2 \\
               &\leq \int_{\left\{(x_1, x_2) : x_1 \leq x_2\right\}} x_2 f_X (x_1, x_2) \dif x_1 \dif x_2 = \operatorname{E}[X_2].
           \end{align*}
           
-        \item Caso discreto: Suponemos que \(\symbf{X} = (X_1, X_2)\) es un vector aleatorio discreto y \(f_X(x_1, x_2)\) su función masa de probabilidad.
+        \item Caso discreto: Suponemos que \(\symbf{X} = (X_1, X_2)\) es un vector aleatorio discreto y \(p_X(x_1, x_2)\) su función masa de probabilidad. De nuevo, utilizando que \(X_1 \leq X_2\) y que si \(x_1 > x_2\) se tiene que \(p_X(x_1, x_2) = 0\), y calculando las respectivas esperanzas, llegamos a al resultado que buscamos
           \begin{align*}
-            \operatorname{E}[X_1] = \sum_{i=1} = \operatorname{E}[X_2]
+            \operatorname{E}[X_1] &= \sum_{\left\{(x_1, x_2) : x_1 \leq x_2\right\}} x_1 f_X (x_1, x_2) \\
+              &\leq \sum_{\left\{(x_1, x_2) : x_1 \leq x_2\right\}} x_2 f_X (x_1, x_2) = \operatorname{E}[X_2].
           \end{align*}
-          CONTINUAR
-          
       \end{enumerate}
   \end{enumerate}
 \end{sol}
+
+\newpage
 
 \begin{ejer}
   Demuestra la desigualdad de Cauchy-Schwarz: \begin{displayquote}
@@ -250,29 +271,28 @@
   	\item Ya demostrado en el apartado anterior.
   	
   	\item Puesto que ninguna de las variables es degenerada se tiene que \(\operatorname{E}[X^2] \neq 0\) y que \(\operatorname{E}[Y^2] \neq 0\). Veamos ambas implicaciones por separado.
-  	\begin{itemize}
-      \item \(\boxed{\implies}\) \ Definimos de nuevo el valor \[
-        \alpha_0 = -\frac{\operatorname{E}[XY]}{\operatorname{E}[X^2]} \in \mathbb{R}
-      \] y recordamos que \[
-        \operatorname{E}\left[(\alpha_0 X + Y)^2\right] = \operatorname{E}[Y^2] - \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]}\,.
-      \] 
-      Si se verifica la igualdad, entonces \[
-        \operatorname{E}[Y^2] - \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]} = 0
-      \] y se tiene que \(\operatorname{E}\left[(\alpha_0 X + Y)^2\right] = 0\). 
-      Como \((\alpha_0 X + Y)^2 \geq 0\), debe ser \(\operatorname{P}[\alpha_0 X + Y = 0] = 1\). 
-      Por tanto, \(a = \alpha_0\) y \(b=1\).
+  
+    \(\boxed{\implies}\) \ Definimos de nuevo el valor \[
+      \alpha_0 = -\frac{\operatorname{E}[XY]}{\operatorname{E}[X^2]} \in \mathbb{R}
+    \] y recordamos que \[
+      \operatorname{E}\left[(\alpha_0 X + Y)^2\right] = \operatorname{E}[Y^2] - \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]}\,.
+    \] 
+    Si se verifica la igualdad, entonces \[
+      \operatorname{E}[Y^2] - \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]} = 0
+    \] y se tiene que \(\operatorname{E}\left[(\alpha_0 X + Y)^2\right] = 0\). 
+    Como \((\alpha_0 X + Y)^2 \geq 0\), debe ser \(\operatorname{P}[\alpha_0 X + Y = 0] = 1\). 
+    Por tanto, \(a = \alpha_0\) y \(b=1\).
 
-      Falta comprobar que \(a = \alpha_0 \neq 0\) o, equivalentemente, que \(\operatorname{E}[XY] \neq 0\), para lo que procedemos por reducción al absurdo. 
-      Supongamos que \(\operatorname{E}[XY] = 0\). 
-      Entonces se tiene que \(\operatorname{E}[X^2] = 0\) o bien \(\operatorname{E}[Y^2] = 0\), lo cual es imposible por hipótesis.
+    Falta comprobar que \(a = \alpha_0 \neq 0\) o, equivalentemente, que \(\operatorname{E}[XY] \neq 0\), para lo que procedemos por reducción al absurdo. 
+    Supongamos que \(\operatorname{E}[XY] = 0\). 
+    Entonces se tiene que \(\operatorname{E}[X^2] = 0\) o bien \(\operatorname{E}[Y^2] = 0\), lo cual es imposible por hipótesis.
 
-      \item \(\boxed{\impliedby}\) Partimos de que existen \(a, b \in \mathbb R\) tales que \(\operatorname{P}[aX + bY = 0] = 1\), lo que equivale a que \(\operatorname{P}\left[Y = \sfrac{-a}{b}\,X\right] = 1\). 
-      Esto implica que \[
-        \operatorname{E}[Y^2] = \frac{a^2}{b^2}\operatorname{E}[X^2] \quad \text{y que} \quad \operatorname{E}[XY] = -\frac{a}{b}\operatorname{E}[X^2],
-      \] lo que se da si y solo si \[
-        \left(\operatorname{E}[XY]\right)^2 = \operatorname{E}[X^2] \operatorname{E}[Y^2].
-      \]
-  	\end{itemize}
+    \(\boxed{\impliedby}\) Partimos de que existen \(a, b \in \mathbb R\) tales que \(\operatorname{P}[aX + bY = 0] = 1\), lo que equivale a que \(\operatorname{P}\left[Y = \sfrac{-a}{b}\,X\right] = 1\). 
+    Esto implica que \[
+      \operatorname{E}[Y^2] = \frac{a^2}{b^2}\operatorname{E}[X^2] \quad \text{y que} \quad \operatorname{E}[XY] = -\frac{a}{b}\operatorname{E}[X^2],
+    \] lo que se da si y solo si \[
+      \left(\operatorname{E}[XY]\right)^2 = \operatorname{E}[X^2] \operatorname{E}[Y^2].
+    \]
   	
   \end{enumerate}
 \end{sol}
