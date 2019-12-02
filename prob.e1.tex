@@ -7,7 +7,7 @@
   12pt,
 ]{scrartcl}
 
-\linespread{1.05}
+\linespread{1.1}
 
 
 %-------------------------------------------------------------------------------
@@ -91,7 +91,7 @@
   commentstyle=\itshape,
   columns=flexible,
 }
-\renewcommand{\lstlistingname}{Listado}
+%\renewcommand{\lstlistingname}{Listado}
 
 % ENTORNOS
 
@@ -157,18 +157,23 @@
 
 \begin{ejer}
   Demuestra las siguientes propiedades de la esperanza matemática de vectores aleatorios: \begin{enumerate}
-    \item Linealidad. Sea \(\symbf{X} = (X_1, \dots, X_n)\) un vector aleatorio tal que existe \(\operatorname{E}[X_i]\) para todo \(i = 1, \dots, n\) y para cualesquiera \((a_1, \dots, a_n), (b_1, \dots, b_n) \in \mathbb R^n\) existe además \(\operatorname{E}[a_iX_i + b_i]\) para todo \(i = 1, \dots, n\). Entonces se tiene que \[
+    \item Linealidad. Sea \(\symbf{X} = (X_1, \dots, X_n)\) un vector aleatorio tal que existe \(\operatorname{E}[X_i]\) para todo \(i = 1, \dots, n\) y para cualesquiera \((a_1, \dots, a_n), (b_1, \dots, b_n) \in \mathbb R^n\) existe además \(\operatorname{E}[a_iX_i + b_i]\) para todo \(i = 1, \dots, n\). 
+    Entonces se tiene que \[
       \exists \operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right] =  \sum_{i=1}^{n}a_i \operatorname{E}[X_i] + b_i\,.
     \]
-    \item Conservación del orden. Sean \(X_1\) y \(X_2\) dos variables aleatorias tales que \(X_1 \leq X_2\), \(\exists \operatorname{E}[X_1]\) y \(\exists \operatorname{E}[X_2]\). Entonces se verifica que \(\operatorname{E}[X_1] \leq \operatorname{E}[X_2]\).
+    \item Conservación del orden. Sean \(X_1\) y \(X_2\) dos variables aleatorias tales que \(X_1 \leq X_2\) y existen tanto \(\operatorname{E}[X_1]\) como \(\operatorname{E}[X_2]\). 
+    Entonces se verifica que \(\operatorname{E}[X_1] \leq \operatorname{E}[X_2]\).
   \end{enumerate}
 \end{ejer}
 
 \begin{sol}
-  Veamos la solución por apartados, suponiendo que \(\symbf{X} \) tiene distribución de probabilidad continua ---para el caso discreto la solución es análoga---. \begin{enumerate}
-    \item Comenzamos probando la existencia. Que exista \(\operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right]\) equivale a que \[
+  Veamos la solución por apartados. \begin{enumerate}
+    \item Vemos primero el caso continuo, pues el caso discreto será análogo. 
+    Comenzamos probando la existencia. 
+    Que exista \(\operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right]\) equivale a que \[
       \int_{\mathbb R^n}\left|\sum_{i=1}^n a_ix_i + b_i\right| f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n < \infty.
-    \] Aplicando la desigualdad triangular llegamos a que \begin{align*}
+    \] 
+    Aplicando la desigualdad triangular llegamos a que \begin{align*}
       \int_{\mathbb R^n}&\left|\sum_{i=1}^n a_ix_i + b_i\right| f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\\
         &\leq \int_{\mathbb R^n}\left(\sum_{i=1}^n \left|a_ix_i + b_i\right|\right) f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\\
         \intertext{y como la integral de la suma es la suma de las integrales,}
@@ -183,82 +188,90 @@
         &= \sum_{i=1}^n\left(\int_{\mathbb R^n} (a_ix_i + b_i) f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\right)\\
         &= \sum_{i=1}^n\left(\int_{\mathbb R^n} a_ix_if_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n + \int_{\mathbb R^n} b_if_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\right)\\
         &= \sum_{i=1}^n\left(a_i\int_{\mathbb R^n}x_if_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n + b_i\int_{\mathbb R^n} f_X(x_1, \dots, x_n)\dif x_1\dots\dif x_n\right),
-    \end{align*} donde la integral que multiplica a cada \(a_i\) es \(\operatorname{E}[X_i]\), y la que multiplica a \(b_i\), la integral de la función de densidad ---cuyo valor es \(1\) por definición---. En consecuencia, tenemos que \[
+    \end{align*} donde la integral que multiplica a cada \(a_i\) es \(\operatorname{E}[X_i]\), y la que multiplica a \(b_i\), la integral de la función de densidad ---cuyo valor es \(1\) por definición---. 
+    En consecuencia, tenemos que \[
       \operatorname{E}\left[\sum_{i=1}^n a_iX_i + b_i\right] = \sum_{i=1}^n\left(a_i \operatorname{E}[X_i] + b_i\right),
     \] como queríamos.
+
+    En el caso discreto, 
   
-  \item
-  	\begin{enumerate}
-  	  \item Caso continuo: Suponemos que \(\symbf{X} = (X_1, X_2)\) es un vector aleatorio continuo y \(f_X(x_1, x_2)\) su función de densidad. Utilizando que \(X_1 \leq X_2\) y que \(x_1 > x_2 \Rightarrow f_X(x_1, x_2) = 0\):
-  	    \begin{align*}
-  	      \operatorname{E}[X_1] = \int_{\{(x_1, x_2) / x_1 \leq x_2\}} x_1 f_X (x_1, x_2) dx_1 dx_2 \leq \int_{\{(x_1, x_2) / x_1 \leq x_2\}} x_2 f_X (x_1, x_2) dx_1 dx_2 = \operatorname{E}[X_2]
-  	    \end{align*}
-  	  	
-  	  \item Caso discreto: Suponemos que \(\symbf{X} = (X_1, X_2)\) es un vector aleatorio discreto y \(f_X(x_1, x_2)\) su función masa de probabilidad.
-  	     \begin{align*}
-  	      \operatorname{E}[X_1] = \sum_{i=1} = \operatorname{E}[X_2]
-  	    \end{align*}
-  	    CONTINUAR
-  	  	
-  	\end{enumerate}
+    \item
+      \begin{enumerate}
+        \item Caso continuo: Suponemos que \(\symbf{X} = (X_1, X_2)\) es un vector aleatorio continuo y \(f_X(x_1, x_2)\) su función de densidad. 
+        Utilizando que \(X_1 \leq X_2\) y que si \(x_1 > x_2\) se tiene que \(f_X(x_1, x_2) = 0\) y calculando las respectivas esperanzas llegamos a al resultado que buscamos
+          \begin{align*}
+            \operatorname{E}[X_1] &= \int_{\left\{(x_1, x_2) : x_1 \leq x_2\right\}} x_1 f_X (x_1, x_2) \dif x_1 \dif x_2 \\
+              &\leq \int_{\left\{(x_1, x_2) : x_1 \leq x_2\right\}} x_2 f_X (x_1, x_2) \dif x_1 \dif x_2 = \operatorname{E}[X_2].
+          \end{align*}
+          
+        \item Caso discreto: Suponemos que \(\symbf{X} = (X_1, X_2)\) es un vector aleatorio discreto y \(f_X(x_1, x_2)\) su función masa de probabilidad.
+          \begin{align*}
+            \operatorname{E}[X_1] = \sum_{i=1} = \operatorname{E}[X_2]
+          \end{align*}
+          CONTINUAR
+          
+      \end{enumerate}
   \end{enumerate}
 \end{sol}
 
-
-
-
-
 \begin{ejer}
-  Demuestra la desigualdad de Cauchy-Schwarz: \\
-  Sean \(X\), \(Y\) variables aleatorias tales que \(\exists \operatorname{E}[X^2]\) y \(\exists \operatorname{E}[Y^2]\), entonces:
-  \begin{enumerate}
-     \item \((\operatorname{E}[XY])^2 \leq \operatorname{E}[X^2] \operatorname{E}[Y^2]\)
-     
-     \item Si \(X\) o \(Y\) es degenerada en cero o las dos son degeneradas, se da la igualdad.
-     
-     \item Si \(X\) e \(Y\) son no degeneradas, se da la igualdad si y sólo si \(\exists a,b \in \mathbb{R}\setminus\{0\}\) tal que \(\operatorname{P}[aX+bY=0] = 1\)
-  \end{enumerate}
+  Demuestra la desigualdad de Cauchy-Schwarz: \begin{displayquote}
+    Sean \(X\), \(Y\) variables aleatorias tales que existen las esperanzas \(\operatorname{E}[X^2]\) y \(\operatorname{E}[Y^2]\). Entonces:
+    \begin{enumerate}
+      \item \(\left(\operatorname{E}[XY]\right)^2 \leq \operatorname{E}[X^2] \operatorname{E}[Y^2]\).
+      \item Si \(X\) o \(Y\) es degenerada en cero o las dos son degeneradas, se da la igualdad.
+      \item Si \(X\) e \(Y\) son no degeneradas, se da la igualdad si y sólo si existen \(a,b \in \mathbb{R}\setminus\{0\}\) tales que \(\operatorname{P}[aX+bY=0] = 1\).
+    \end{enumerate}
+  \end{displayquote}
 \end{ejer}
 
 \begin{sol}
-  \begin{enumerate}
-    \\
-  	\item Sabemos por las propiedades de los momentos de segundo orden que \(\exists \operatorname{E}[X^2] \wedge \exists \operatorname{E}[Y^2] \Rightarrow \exists \operatorname{E}[XY]\). Analizamos de forma separada los casos \(\operatorname{E}[X^2] = 0\) y \(\operatorname{E}[X^2] \neq 0\).
+  Veamos la solución por apartados: \begin{enumerate}
+    \item Sabemos por las propiedades de los momentos de segundo orden que si existen \(\operatorname{E}[X^2]\) y \(\operatorname{E}[Y^2]\) entonces existe \(\operatorname{E}[XY]\). 
+    Analizamos de forma separada los casos \(\operatorname{E}[X^2] = 0\) y \(\operatorname{E}[X^2] \neq 0\).
   	  \begin{itemize}
-  	    \item Caso \(\operatorname[X^2] = 0\). Al ser \(X^2 > \gep 0\) y \(\operatorname{E}[X^2] = 0\) debe cumplirse que \(\operatorname{P}[X=0] = 1\) y \(\operatorname{P}[X=0] = 1\), luego \(\operatorname{E}[XY]=0\). Por tanto se cumple la igualdad cuando cuando \(\operatorname{E}[X^2] = 0\) o \(\operatorname{E}[Y^2] = 0\) y con ello demostramos la segunda afirmación.
+        \item Si \(\operatorname E[X^2] = 0\), como \(X^2 > 0\), debe cumplirse que \(\operatorname{P}[X=0] = 1\) y \(\operatorname{P}[X=0] = 1\), luego \(\operatorname{E}[XY]=0\). 
+        Por tanto se cumple la igualdad cuando cuando \(\operatorname{E}[X^2] = 0\) o bien \(\operatorname{E}[Y^2] = 0\) y con ello demostramos además la segunda afirmación.
   	    
-  	    \item Caso \(\operatorname[X^2] \neq 0\) \\
-  	      Definimos \(\alpha_0 = -\frac{\operatorname{E}[XY]}{\operatorname{E}[X^2]} \in \mathbb{R}\) y la variable aleatoria \(Z=\alpha_0 X + Y\). \\
+  	    \item Veamos ahora el caso en el que \(\operatorname E[X^2] \neq 0\). 
+  	      Definimos el valor \[\alpha_0 = -\frac{\operatorname{E}[XY]}{\operatorname{E}[X^2]} \in \mathbb{R}\] y la variable aleatoria \(Z=\alpha_0 X + Y\).
   	      Calculamos la esperanza de \(Z^2\):
   	      \begin{align*}
-  	        \operatorname{E}[Z^2] \\ 
-  	        &= \operatorname{E}[(\alpha_0 X + Y)^2] \\
+  	        \operatorname{E}[Z^2] &= \operatorname{E}\left[(\alpha_0 X + Y)^2\right] \\
   	        &= \operatorname{E}[\alpha_0^2 X^2 + Y^2 + 2\alpha_0 X Y] \\ 
   	        &= \alpha_0^2 \operatorname{E}[X^2] + \operatorname{E}[Y^2] + 2 \alpha_0 \operatorname{E}[XY] \\
-  	        &= \frac{(\operatorname{E}[XY])^2}{(\operatorname{E}[X^2])^2} \operatorname{E}[X^2] + \operatorname{E}[Y^2] - 2\frac{\operatorname{E}[XY]}{\operatorname{E}[X^2]} \operatorname{E}[XY] \\
-  	        &= \frac{(\operatorname{E}[XY])^2}{\operatorname{E}[X^2]} + \operatorname{E}[Y^2] - 2\frac{(\operatorname{E}[XY])^2}{\operatorname{E}[X^2]} \\
-  	        &= \operatorname{E}[Y^2] - \frac{(\operatorname{E}[XY])^2}{\operatorname{E}[X^2]}
+  	        &= \frac{\left(\operatorname{E}[XY]\right)^2}{\left(\operatorname{E}[X^2]\right)^2} \operatorname{E}[X^2] + \operatorname{E}[Y^2] - 2\frac{\operatorname{E}[XY]}{\operatorname{E}[X^2]} \operatorname{E}[XY] \\
+  	        &= \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]} + \operatorname{E}[Y^2] - 2\frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]} \\
+  	        &= \operatorname{E}[Y^2] - \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]}\,.
   	      \end{align*}
-  	      
-  	      Como \(\operatorname{E}[Z^2] \geq 0\), tenemos que \(\operatorname{E}[Y^2] - \frac{(\operatorname{E}[XY])^2}{\operatorname{E}[X^2]} \geq 0 \Leftrightarrow (\operatorname{E}[XY])^2 \leq \operatorname{E}[X^2] \operatorname{E}[Y^2] \Rightarrow \operatorname{E}[XY] \leq \operatorname{E}[X^2] \operatorname{E}[Y^2]\), que es la desigualdad buscada.
-  	    
+  	      Como \(\operatorname{E}[Z^2] \geq 0\), tenemos que \[\operatorname{E}[Y^2] - \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]} \geq 0\] si y solo si \(\left(\operatorname{E}[XY]\right)^2 \leq \operatorname{E}[X^2] \operatorname{E}[Y^2]\), luego \(\operatorname{E}[XY] \leq \operatorname{E}[X^2] \operatorname{E}[Y^2]\), que es la desigualdad buscada.
   	  \end{itemize}
   	
-  	\item Ya demostrada
+  	\item Ya demostrado en el apartado anterior.
   	
-  	\item Ninguna de las variables es degenerada, es decir, \(\operatorname{E}[X^2] \neq 0\) y \(\operatorname{E}[Y^2] \neq 0\).
+  	\item Puesto que ninguna de las variables es degenerada se tiene que \(\operatorname{E}[X^2] \neq 0\) y que \(\operatorname{E}[Y^2] \neq 0\). Veamos ambas implicaciones por separado.
   	\begin{itemize}
-  	  \item \(\Rightarrow\) \ Definimos de nuevo \(\alpha_0 = -\frac{\operatorname{E}[XY]}{\operatorname{E}[X^2]} \in \mathbb{R}\) y recordemos que \(\operatorname{E}[(\alpha_0 X + Y)^2] = \operatorname{E}[Y^2] - \frac{(\operatorname{E}[XY])^2}{\operatorname{E}[X^2]}\). Si se verifica la igualdad, entonces \(\operatorname{E}[Y^2] - \frac{(\operatorname{E}[XY])^2}{\operatorname{E}[X^2]} = 0\) y se tiene que \(\operatorname{E}[(\alpha_0 X + Y)^2] = 0\). Como \((\alpha_0 X + Y)^2 \geq 0\), debe ser \(\operatorname{P}[\alpha_0 X + Y = 0] = 1\). Por tanto, \(a = \alhpa_0\) y \(b=1\). \\
-  	  Falta comprobar que \(a = \alpha_0 \neq 0\) o, equivalentemente, que \(\operatorname{E}[XY] \neq 0\). Por reducción al absurdo: supongamos que \(\operatorname{E}[XY] = 0\), entonces \(\operatorname{E}[X^2] = 0\) o \(\operatorname{E}[Y^2] = 0\), lo cual es imposible por hipótesis.
-  	  
-  	  
-  	  \item \Leftarrow
-  	  \begin{align*}
-  	     \operatorname{P}[aX + bY = 0] = 1 \\
-  	     &\Leftrightarrow \operatorname{P}[Y = -\frac{a}{b}X] = 1 \\
-  	     &\Rightarrow \operatorname{E}[Y^2] = \frac{a^2}{b^2}\operatorname{E}[X^2] \wedge \operatorname{E}[XY] = -\frac{a}{b}\operatorname{E}[X^2] \\
-  	     &\Leftrightarrow (\operatorname{E}[XY])^2 = \operatorname{E}[X^2] \operatorname{E}[Y^2] \\
-  	  \end{align*}
+      \item \(\boxed{\implies}\) \ Definimos de nuevo el valor \[
+        \alpha_0 = -\frac{\operatorname{E}[XY]}{\operatorname{E}[X^2]} \in \mathbb{R}
+      \] y recordamos que \[
+        \operatorname{E}\left[(\alpha_0 X + Y)^2\right] = \operatorname{E}[Y^2] - \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]}\,.
+      \] 
+      Si se verifica la igualdad, entonces \[
+        \operatorname{E}[Y^2] - \frac{\left(\operatorname{E}[XY]\right)^2}{\operatorname{E}[X^2]} = 0
+      \] y se tiene que \(\operatorname{E}\left[(\alpha_0 X + Y)^2\right] = 0\). 
+      Como \((\alpha_0 X + Y)^2 \geq 0\), debe ser \(\operatorname{P}[\alpha_0 X + Y = 0] = 1\). 
+      Por tanto, \(a = \alpha_0\) y \(b=1\).
+
+      Falta comprobar que \(a = \alpha_0 \neq 0\) o, equivalentemente, que \(\operatorname{E}[XY] \neq 0\), para lo que procedemos por reducción al absurdo. 
+      Supongamos que \(\operatorname{E}[XY] = 0\). 
+      Entonces se tiene que \(\operatorname{E}[X^2] = 0\) o bien \(\operatorname{E}[Y^2] = 0\), lo cual es imposible por hipótesis.
+
+      \item \(\boxed{\impliedby}\) Partimos de que existen \(a, b \in \mathbb R\) tales que \(\operatorname{P}[aX + bY = 0] = 1\), lo que equivale a que \(\operatorname{P}\left[Y = \sfrac{-a}{b}\,X\right] = 1\). 
+      Esto implica que \[
+        \operatorname{E}[Y^2] = \frac{a^2}{b^2}\operatorname{E}[X^2] \quad \text{y que} \quad \operatorname{E}[XY] = -\frac{a}{b}\operatorname{E}[X^2],
+      \] lo que se da si y solo si \[
+        \left(\operatorname{E}[XY]\right)^2 = \operatorname{E}[X^2] \operatorname{E}[Y^2].
+      \]
   	\end{itemize}
   	
   \end{enumerate}
