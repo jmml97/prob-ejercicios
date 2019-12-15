@@ -191,16 +191,45 @@
   Una vez calculadas las distribuciones marginales, calculamos las distribuciones condicionadas. La de \(Y\) condicionado a \(X\) está determinada por la función
   \begin{align*}
     f_{y\mid x}(y) = \begin{dcases}
-      \hfil\frac{1/2}{x/2} = 1/x & \text{para } 0 < x < 1,\; 0 < y < x;\\
-      \hfil\frac{1/2}{1/2} = 1  & \text{para } 1 < x < 2,\; 0 < y < 1;\\
-      \frac{1/2}{(3-x)/2} = 1/(3-x) & \text{para } 2 < x < 3,\; x-2 < y < 1.
+      \hfil\frac{1/2}{x/2} = 1/x & \text{para } 0 < x < 1,\quad 0 < y < x;\\
+      \hfil\frac{1/2}{1/2} = 1  & \text{para } 1 < x < 2,\quad 0 < y < 1;\\
+      \frac{1/2}{(3-x)/2} = 1/(3-x) & \text{para } 2 < x < 3,\quad x-2 < y < 1.
     \end{dcases}
   \end{align*}
   Por otro lado, la de \(X\) condicionado a \(Y\) está determinada por la función
   \[
-    f_{x \mid y}(x) = \frac{1/2}{1} = 1/2 \quad\text{para } 0 < y < 1,\; y < x < y+2.
+    f_{x \mid y}(x) = \frac{1/2}{1} = 1/2 \quad\text{para } 0 < y < 1,\quad y < x < y+2.
   \]
 
+  Recordemos que si estamos estimando el valor de \(X\) a partir de una función \(\varphi\) de \(Y\), podemos calcular el error cuadrático medio de dicha estimación utilizando
+  \[
+    \operatorname{ECM}(\varphi(Y)) = \operatorname{E}[X^2] - \operatorname{E}[\operatorname{E}[X\mid Y]^2].
+  \]
+  Por tanto, para calcular ambos errores necesitamos hallar las esperanzas \(\operatorname{E}[X^2]\), \(\operatorname{E}[Y^2]\), \(\operatorname{E}[\operatorname{E}[X \mid Y]^2]\) y \(\operatorname{E}[\operatorname{E}[Y \mid X]^2]\).
+
+  \begin{align*}
+    \operatorname{E}[X^2] &= \int_0^1 x^2\frac{x}{2}\dif x
+       + \int_1^2 x^2\frac{1}{2} \dif x
+       + \int_2^3 x^2\frac{3-x}{2} \dif x\\
+      &= \left[\frac{x^4}{8}\right]^1_0
+       + \left[\frac{x^3}{6}\right]^2_1
+       + \left[\frac{x^3}{2} - \frac{x^4}{8}\right]^3_2\\
+      &= \frac{1}{8} + \frac{8}{6} - \frac{1}{6} + \left(
+        \left(\frac{27}{2} - \frac{81}{8}\right) - \left(\frac{8}{2} - \frac{16}{8}\right)
+      \right)\\
+      &= \frac{8}{3}\,.
+  \end{align*}
+
+  \begin{align*}
+    \operatorname{E}[Y^2] = \int_0^1 y^2\dif y
+       = \left[\frac{y^3}{3}\right]^1_0
+       = \frac{1}{3}\,.
+  \end{align*}
+
+  Ahora necesitamos \(\operatorname{E}[X \mid Y]\) y \(\operatorname{E}[Y \mid X]\).
+  \begin{align*}
+    \operatorname{E}[X \mid Y] = \int x f_{x\mid y} \dif x = \int_{y}^{y+2} x/2 \dif x = \big[x^2\big]^{y+2}_y = 1 +y \quad \text{para } 0 < y < 1. 
+  \end{align*}
 \end{sol}
 
 \end{document}
