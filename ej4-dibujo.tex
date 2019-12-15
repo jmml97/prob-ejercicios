@@ -1,0 +1,38 @@
+\documentclass[crop,tikz]{standalone}
+
+\usepackage[no-math]{fontspec}
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{Libertinus Mono}
+
+\usepackage[math-style=TeX]{unicode-math}
+\setmathfont{Libertinus Math}
+
+\usepackage{tikz}
+\usepackage{amsfonts}
+\usetikzlibrary{intersections,decorations.markings}
+
+\begin{document}
+  \sffamily
+  \begin{tikzpicture}[
+    scale=1.75
+  ]
+    \draw[gray] (-0.5,-0.5) rectangle (3.5,1.5);
+    \draw[->,>=latex,gray] (-0.5,0) -- (3.5,0);
+    \draw[->,>=latex,gray] (0,-0.5) -- (0,1.5);
+
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (1,1);
+    \coordinate (C) at (3,1);
+    \coordinate (D) at (2,0);
+
+    \node [below] at (A) {$(0,0)$};
+    \node [above] at (B) {$(1,1)$};
+    \node [above] at (C) {$(3,1)$};
+    \node [below] at (D) {$(2,0)$};
+
+    \draw [thick] (A) -- (B) -- (C) -- (D) -- (A);
+    \draw (A) -- (B) node [pos=.5, above, sloped,] (r1) {$y=x$};
+    \draw (D) -- (C) node [pos=.5, below, sloped,] (r1) {$y=x-2$};
+  \end{tikzpicture}
+\end{document}

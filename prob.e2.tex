@@ -1,0 +1,206 @@
+% archivo:    prob.e1.tex
+% asignatura: Probabilidad
+% autores:      José María Martín Luque, José Luis Ruiz Benito, Ricardo Ruiz Fernández de Alba
+\documentclass[
+  a4paper,
+  spanish,
+  12pt,
+]{scrartcl}
+
+\linespread{1.1}
+
+
+%-------------------------------------------------------------------------------
+%	PAQUETES
+%-------------------------------------------------------------------------------
+
+% Idioma
+
+\usepackage[es-noindentfirst, es-tabla]{babel}
+
+% Citas de texto en línea/bloque
+
+\usepackage[autostyle]{csquotes}
+
+% Matemáticas
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{commath}
+\usepackage{xfrac}
+
+% Fuentes personalizadas para utilizar con XeLaTeX o LuaLaTeX
+
+\usepackage[no-math]{fontspec}
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{Libertinus Mono}
+
+\usepackage[math-style=TeX]{unicode-math}
+\setmathfont{Libertinus Math}
+
+
+% Configuración de microtype
+
+\defaultfontfeatures{Ligatures=TeX,Numbers=Lining}
+\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10]{microtype}
+\SetTracking{encoding={*}, shape=sc}{0}
+
+% Enlaces y colores
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+  colorlinks=true,
+  citecolor=,
+  linkcolor=,
+  urlcolor=blue,
+}
+
+% Otros elementos de página
+
+\usepackage{enumitem}
+%\setlist[itemize]{leftmargin=*}
+%\setlist[enumerate]{leftmargin=*}
+
+\usepackage[labelfont=sc]{caption}
+
+\usepackage{booktabs}
+\renewcommand\arraystretch{1.5}
+
+% Tikz
+
+\usepackage{tikz}
+\usetikzlibrary{babel}
+\usepackage{float}
+
+% Código
+
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily,%
+	breaklines=true,%
+	captionpos=b,                    % sets the caption-position to bottom
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  frame=lines,
+  numbers=left,
+  stepnumber=1,
+  aboveskip=12pt,
+  showstringspaces=false,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  columns=flexible,
+}
+%\renewcommand{\lstlistingname}{Listado}
+
+% ENTORNOS
+
+\newtheoremstyle{ejercicio-style}  % Nombre del estilo
+{2\topsep}                                  % Espacio por encima
+{1.5\topsep}                                  % Espacio por debajo
+{\itshape}                                  % Fuente del cuerpo
+{0pt}                                  % Identación
+{\scshape}                      % Fuente para la cabecera
+{.}                                 % Puntuación tras la cabecera
+{5pt plus 1pt minus 1pt}                              % Espacio tras la cabecera
+{{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Especificación de la cabecera
+
+\newtheoremstyle{remark-style}
+{-\topsep}                                  % Espacio por encima
+{2\topsep}                                  % Espacio por debajo
+{}                                  % Fuente del cuerpo
+{0pt}                                  % Identación
+{\itshape}
+{.}
+{5pt plus 1pt minus 1pt}                              % Espacio tras la cabecera
+{}
+
+% Ejercicios y solución
+\theoremstyle{ejercicio-style}
+\newtheorem{ejer}{Ejercicio}
+
+\theoremstyle{remark-style}
+\newtheorem*{sol}{Solución}
+
+
+% Márgenes
+\usepackage[bottom=3.125cm, top=2.5cm, left=3.5cm, right=3.5cm, marginparwidth=70pt]{geometry}
+
+\usepackage{hyphenat}
+
+%-------------------------------------------------------------------------------
+%	CONTENIDO
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{flushright}
+  José María Martín Luque
+  
+  José Luis Ruiz Benito
+
+  Ricardo Ruiz Fernández de Alba
+  \vspace{.5em}
+
+  \textit{Probabilidad}
+
+  D.\,G. en Ing. Informática y Matemáticas
+
+  \textsc{Universidad de Granada}\vspace{.5em}
+
+  \today\vspace{.5em}
+\end{flushright}
+
+\begin{flushleft}
+  \scshape\Large Entrega 2. Ejercicio de la relación 4.
+\end{flushleft}
+
+\setcounter{ejer}{13}
+
+\begin{ejer}
+  Sea \((X, Y)\) un vector aleatorio distribuido uniformemente en el paralelogramo de vértices \((0,0)\); \((2,0)\); \((3,1)\); \((1,1)\). Calcular el error cuadrático medio asociado a la predicción de \(X\) a partir de la variable \(Y\) y a la predicción de \(Y\) a partir de la variable aleatoria \(X\). Determinar la predicción más fiable a la vista de los resultados obtenidos.
+\end{ejer}
+
+\begin{sol}
+  Lo primero que necesitamos es hallar la función de densidad del vector aleatorio. 
+  Teniendo en cuenta la región en la que está definido, que podemos ver en la Figura \ref{fig:region}, y sabiendo que se distribuye uniformemente, integramos la función de densidad:
+  \[
+    \int_0^1\int_y^{y+2} k\dif x\dif y = \int_0^1 \big[kx\big]_{y}^{y+2} \dif y= \int_0^1 2k \dif y = 2k.
+  \]
+  Como debe integrar \(1\), concluimos que \(k = 1/2\).
+  \begin{figure}[h]
+    \centering
+    \includegraphics{ej4-dibujo}
+    \caption{Región del plano en la que está distribuido el vector aleatorio \((X,Y)\).}
+    \label{fig:region}
+  \end{figure}
+  
+  Ahora debemos calcular las distribuciones marginales de \(X\) e \(Y\). La de \(X\) viene dada por la función
+  \[
+    f_X(x) = \int_{-\infty}^{\infty} f(x,y) \dif y = \begin{dcases}
+      \int_0^x 1/2 \dif y = x/2 & \text{para } 0 < x < 1,\\
+      \int_0^1 1/2 \dif y = 1/2  & \text{para } 1 < x < 2,\\
+      \int_{x+2}^1 1/2 \dif y = (3 - x)/2 & \text{para } 2 < x < 3.
+    \end{dcases}
+  \]
+  La distribución marginal de \(Y\) viene dada por la función
+  \[
+    f_Y(y) = \int_{-\infty}^{\infty} f(x,y) \dif x = \int_y^{y+2} 1/2 \dif x = 1 \quad\text{para } 0 < y < 1.
+  \]
+
+  Una vez calculadas las distribuciones marginales, calculamos las distribuciones condicionadas. La de \(Y\) condicionado a \(X\) está determinada por la función
+  \begin{align*}
+    f_{y\mid x}(y) = \begin{dcases}
+      \hfil\frac{1/2}{x/2} = 1/x & \text{para } 0 < x < 1,\; 0 < y < x;\\
+      \hfil\frac{1/2}{1/2} = 1  & \text{para } 1 < x < 2,\; 0 < y < 1;\\
+      \frac{1/2}{(3-x)/2} = 1/(3-x) & \text{para } 2 < x < 3,\; x-2 < y < 1.
+    \end{dcases}
+  \end{align*}
+  Por otro lado, la de \(X\) condicionado a \(Y\) está determinada por la función
+  \[
+    f_{x \mid y}(x) = \frac{1/2}{1} = 1/2 \quad\text{para } 0 < y < 1,\; y < x < y+2.
+  \]
+
+\end{sol}
+
+\end{document}
