@@ -230,6 +230,47 @@
   \begin{align*}
     \operatorname{E}[X \mid Y] = \int x f_{x\mid y} \dif x = \int_{y}^{y+2} x/2 \dif x = \big[x^2\big]^{y+2}_y = 1 +y \quad \text{para } 0 < y < 1. 
   \end{align*}
+
+  \begin{align*}
+    \operatorname{E}[Y \mid X] = \int y f_{y\mid x} \dif y = \begin{dcases}
+      \int_0^x y\frac{1}{x} \dif y = \frac{1}{x}\left[\frac{y^2}{2}\right]^x_0 = \frac{x}{2} & \text{para } 0 < x < 1,\\
+      \int_0^1 y \dif y = \left[\frac{y^2}{2}\right]_0^1 = \frac{1}{2}  & \text{para } 1 < x < 2,\\
+      \int_0^x y\frac{1}{3-x} \dif y = \frac{1}{3-x}\left[\frac{y^2}{2}\right]_{x-2}^1 = \frac{x-1}{2} & \text{para } 2 < x < 3.
+    \end{dcases}
+  \end{align*}
+
+  Una vez obtenidas dichas esperanzas podemos calcular \(\operatorname{E}[\operatorname{E}[X \mid Y]^2]\) y \(\operatorname{E}[\operatorname{E}[Y \mid X]^2]\).
+
+  \begin{align*}
+    \operatorname{E}[\operatorname{E}[X \mid Y]^2]
+     = \int_0^1 y^2(1+y) \dif y 
+     = \left[\frac{y^3}{3} + \frac{y^4}{4}\right]_0^1 
+     = \frac{1}{3} + \frac{1}{4} 
+     = \frac{7}{12}.
+  \end{align*}
+
+  \begin{align*}
+    \operatorname{E}[\operatorname{E}[Y \mid X]^2]
+    &= \int_0^1 x^2\frac{x}{2} \dif x 
+     + \int_1^2 x^2\frac{1}{2} \dif x
+     + \int_2^3 x^2\frac{x-1}{2} \dif x\\
+    &= \left[\frac{x^4}{8}\right]_0^1 
+     + \left[\frac{x^3}{6}\right]_1^2 
+     + \left[\frac{x^4}{8} - \frac{x^3}{6}\right]_2^3\\ 
+    &= \frac{1}{3} 
+     + \left(\frac{8}{6} - \frac{1}{6}\right) 
+     + \left(\left(\frac{81}{8} - \frac{27}{6}\right) - \left(\frac{16}{8} - \frac{8}{6}\right)\right)\\ 
+    &= \frac{25}{4}.
+  \end{align*}
+
+  En consecuencia, el error cuadrático medio obtenido al estimar \(X\) a partir de \(Y\) es 
+  \[
+    \operatorname{ECM}(\varphi(Y)) = \frac{8}{3} - \frac{7}{12} = \frac{25}{12},
+  \]
+  y el obtenido al estimar \(Y\) a partir de \(X\),
+  \[
+    \operatorname{ECM}(\varphi(X)) = \frac{1}{3} - \frac{25}{4} = ....
+  \]
 \end{sol}
 
 \end{document}
