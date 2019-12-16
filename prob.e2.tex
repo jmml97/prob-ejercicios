@@ -74,6 +74,10 @@
 \usetikzlibrary{babel}
 \usepackage{float}
 
+% Números con círculos
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
 % Código
 
 \usepackage{listings}
@@ -162,106 +166,140 @@
 \end{ejer}
 
 \begin{sol}
-  Lo primero que necesitamos es hallar la función de densidad del vector aleatorio. 
-  Teniendo en cuenta la región en la que está definido, que podemos ver en la Figura \ref{fig:region}, y sabiendo que se distribuye uniformemente, integramos la función de densidad:
+  Comenzamos recordando que si estamos estimando el valor de \(X\) a partir de una función \(\varphi\) de \(Y\), podemos calcular el error cuadrático medio de dicha estimación utilizando la expresión
   \[
-    \int_0^1\int_y^{y+2} k\dif x\dif y = \int_0^1 \big[kx\big]_{y}^{y+2} \dif y= \int_0^1 2k \dif y = 2k.
+    \operatorname{ECM}(\varphi(Y)) = \operatorname{E}[X^2] - \operatorname{E}[\operatorname{E}[X\mid Y]^2].
   \]
-  Como debe integrar \(1\), concluimos que \(k = 1/2\).
-  \begin{figure}[h]
-    \centering
-    \includegraphics{ej4-dibujo}
-    \caption{Región del plano en la que está distribuido el vector aleatorio \((X,Y)\).}
-    \label{fig:region}
-  \end{figure}
-  
-  Ahora debemos calcular las distribuciones marginales de \(X\) e \(Y\). La de \(X\) viene dada por la función
-  \[
+  En consecuencia, necesitamos hallar:
+  \begin{enumerate}[
+    label=\protect\circled{\arabic*},
+    wide,
+    labelwidth=!, 
+    labelindent=0pt
+  ]
+    \item La función de densidad conjunta del vector aleatorio.
+    \item Las distribuciones marginales de \(X\) e \(Y\).
+    \item Las distribuciones condicionadas \(X\mid Y\) e \(Y \mid X\).
+    \item Las esperanzas \(\operatorname{E}[X^2]\) y \(\operatorname{E}[Y^2]\).
+    \item Las esperanzas condicionadas \(\operatorname{E}[X \mid Y]\) y \(\operatorname{E}[Y \mid X]\).
+    \item Las esperanzas \(\operatorname{E}[\operatorname{E}[X \mid Y]^2]\) y \(\operatorname{E}[\operatorname{E}[Y \mid X]^2]\).
+  \end{enumerate}
+
+  Vayamos paso por paso.
+
+  % \begin{enumerate}[
+  %   label=\protect\circled{\arabic*},
+  %   leftmargin=0pt,
+  % ]
+  %   \item Teniendo en cuenta la región en la que está definido, que podemos ver en la Figura \ref{fig:region}, y sabiendo que se distribuye uniformemente, integramos la función de densidad:
+  %   \[
+  %     \int_0^1\int_y^{y+2} k\dif x\dif y = \int_0^1 \big[kx\big]_{y}^{y+2} \dif y= \int_0^1 2k \dif y = 2k.
+  %   \]
+
+  %   Como debe integrar \(1\), concluimos que \(k = 1/2\).
+  %   \begin{figure}[h]
+  %     \centering
+  %     \includegraphics{ej4-dibujo}
+  %     \caption{Región del plano en la que está distribuido el vector aleatorio \((X,Y)\).}
+  %     \label{fig:region}
+  %   \end{figure}
+  % \end{enumerate}
+
+  \begin{enumerate}[
+    label=\protect\circled{\arabic*},
+    wide,
+    labelwidth=!, 
+    labelindent=0pt,
+    listparindent=\parindent,
+    parsep=0pt,
+  ]
+    \item Sabemos que el vector aleatorio se distribuye de forma uniforme, luego la función de densidad conjunta será de la forma \(f(x,y) = k\), con \(k \in \mathbb R\). Debemos hallar el valor de \(k\) teniendo en cuenta la región en la que está definido, que podemos ver en la Figura \ref{fig:region}. Para ello integramos
+    \[
+      \int_0^1\int_y^{y+2} k\dif x\dif y = \int_0^1 \big[kx\big]_{y}^{y+2} \dif y= \int_0^1 2k \dif y = 2k.
+    \]
+    Como se trata de una función de densidad dicha integral debe tener valor \(1\), luego \(k = 1/2\).
+    \begin{figure}[h]
+      \centering
+      \includegraphics{ej4-dibujo}
+      \caption{Región del plano en la que está distribuido el vector aleatorio \((X,Y)\).}
+      \label{fig:region}
+    \end{figure}
+    \item La distribución marginal de \(X\) viene dada por la función de densidad
+    \[
     f_X(x) = \int_{-\infty}^{\infty} f(x,y) \dif y = \begin{dcases}
       \int_0^x 1/2 \dif y = x/2 & \text{para } 0 < x < 1,\\
       \int_0^1 1/2 \dif y = 1/2  & \text{para } 1 < x < 2,\\
       \int_{x+2}^1 1/2 \dif y = (3 - x)/2 & \text{para } 2 < x < 3.
     \end{dcases}
-  \]
-  La distribución marginal de \(Y\) viene dada por la función
-  \[
-    f_Y(y) = \int_{-\infty}^{\infty} f(x,y) \dif x = \int_y^{y+2} 1/2 \dif x = 1 \quad\text{para } 0 < y < 1.
-  \]
-
-  Una vez calculadas las distribuciones marginales, calculamos las distribuciones condicionadas. La de \(Y\) condicionado a \(X\) está determinada por la función
-  \begin{align*}
-    f_{y\mid x}(y) = \begin{dcases}
-      \hfil\frac{1/2}{x/2} = 1/x & \text{para } 0 < x < 1,\quad 0 < y < x;\\
-      \hfil\frac{1/2}{1/2} = 1  & \text{para } 1 < x < 2,\quad 0 < y < 1;\\
-      \frac{1/2}{(3-x)/2} = 1/(3-x) & \text{para } 2 < x < 3,\quad x-2 < y < 1.
-    \end{dcases}
-  \end{align*}
-  Por otro lado, la de \(X\) condicionado a \(Y\) está determinada por la función
-  \[
-    f_{x \mid y}(x) = \frac{1/2}{1} = 1/2 \quad\text{para } 0 < y < 1,\quad y < x < y+2.
-  \]
-
-  Recordemos que si estamos estimando el valor de \(X\) a partir de una función \(\varphi\) de \(Y\), podemos calcular el error cuadrático medio de dicha estimación utilizando
-  \[
-    \operatorname{ECM}(\varphi(Y)) = \operatorname{E}[X^2] - \operatorname{E}[\operatorname{E}[X\mid Y]^2].
-  \]
-  Por tanto, para calcular ambos errores necesitamos hallar las esperanzas \(\operatorname{E}[X^2]\), \(\operatorname{E}[Y^2]\), \(\operatorname{E}[\operatorname{E}[X \mid Y]^2]\) y \(\operatorname{E}[\operatorname{E}[Y \mid X]^2]\).
-
-  \begin{align*}
-    \operatorname{E}[X^2] &= \int_0^1 x^2\frac{x}{2}\dif x
+    \]
+    La distribución marginal de \(Y\) viene dada por la función de densidad
+    \[
+      f_Y(y) = \int_{-\infty}^{\infty} f(x,y) \dif x = \int_y^{y+2} 1/2 \dif x = 1 \quad\text{para } 0 < y < 1.
+    \]
+    \item La distribución condicionada \(X \mid Y\) está determinada por la función de densidad
+    \[
+      f_{x \mid y}(x) = \frac{1/2}{1} = 1/2 \quad\text{para } 0 < y < 1,\quad y < x < y+2.
+    \]
+    Por otro lado, la distribución condicionada \(Y \mid X\) está determinada por la función de densidad
+    \begin{align*}
+      f_{y\mid x}(y) = \begin{dcases}
+        \hfil\frac{1/2}{x/2} = 1/x & \text{para } 0 < x < 1,\quad 0 < y < x;\\
+        \hfil\frac{1/2}{1/2} = 1  & \text{para } 1 < x < 2,\quad 0 < y < 1;\\
+        \frac{1/2}{(3-x)/2} = 1/(3-x) & \text{para } 2 < x < 3,\quad x-2 < y < 1.
+      \end{dcases}
+    \end{align*}
+    \item Las esperanzas \(\operatorname{E}[X^2]\) y \(\operatorname{E}[Y^2]\) vienen dadas por
+    \begin{align*}
+      \operatorname{E}[X^2] &= \int_0^1 x^2\frac{x}{2}\dif x
+         + \int_1^2 x^2\frac{1}{2} \dif x
+         + \int_2^3 x^2\frac{3-x}{2} \dif x\\
+        &= \left[\frac{x^4}{8}\right]^1_0
+         + \left[\frac{x^3}{6}\right]^2_1
+         + \left[\frac{x^3}{2} - \frac{x^4}{8}\right]^3_2\\
+        &= \frac{1}{8} + \frac{8}{6} - \frac{1}{6} + \left(
+          \left(\frac{27}{2} - \frac{81}{8}\right) - \left(\frac{8}{2} - \frac{16}{8}\right)
+        \right)\\
+        &= \frac{8}{3}\,,\\
+      \intertext{y}
+      \operatorname{E}[Y^2] &= \int_0^1 y^2\dif y
+        = \left[\frac{y^3}{3}\right]^1_0
+        = \frac{1}{3}\,.
+    \end{align*}
+    \item Las esperanzas condicionadas  \(\operatorname{E}[X \mid Y]\) y \(\operatorname{E}[Y \mid X]\) vienen dadas por
+    \begin{align*}
+      \operatorname{E}[X \mid Y] = \int x f_{x\mid y} \dif x = \int_{y}^{y+2} x/2 \dif x = \big[x^2\big]^{y+2}_y = 1 +y \quad \text{para } 0 < y < 1, 
+    \end{align*}
+    y
+    \begin{align*}
+      \operatorname{E}[Y \mid X] = \int y f_{y\mid x} \dif y = \begin{dcases}
+        \int_0^x y\frac{1}{x} \dif y = \frac{1}{x}\left[\frac{y^2}{2}\right]^x_0 = \frac{x}{2} & \text{para } 0 < x < 1,\\
+        \int_0^1 y \dif y = \left[\frac{y^2}{2}\right]_0^1 = \frac{1}{2}  & \text{para } 1 < x < 2,\\
+        \int_0^x y\frac{1}{3-x} \dif y = \frac{1}{3-x}\left[\frac{y^2}{2}\right]_{x-2}^1 = \frac{x-1}{2} & \text{para } 2 < x < 3.
+      \end{dcases}
+    \end{align*}
+    \item Finalmente, calculamos las esperanzas \(\operatorname{E}[\operatorname{E}[X \mid Y]^2]\) y \(\operatorname{E}[\operatorname{E}[Y \mid X]^2]\), que vienen dadas por
+    \begin{align*}
+      \operatorname{E}[\operatorname{E}[X \mid Y]^2]
+       = \int_0^1 y^2(1+y) \dif y 
+       = \left[\frac{y^3}{3} + \frac{y^4}{4}\right]_0^1 
+       = \frac{1}{3} + \frac{1}{4} 
+       = \frac{7}{12}.
+    \end{align*}
+    y
+    \begin{align*}
+      \operatorname{E}[\operatorname{E}[Y \mid X]^2]
+      &= \int_0^1 x^2\frac{x}{2} \dif x 
        + \int_1^2 x^2\frac{1}{2} \dif x
-       + \int_2^3 x^2\frac{3-x}{2} \dif x\\
-      &= \left[\frac{x^4}{8}\right]^1_0
-       + \left[\frac{x^3}{6}\right]^2_1
-       + \left[\frac{x^3}{2} - \frac{x^4}{8}\right]^3_2\\
-      &= \frac{1}{8} + \frac{8}{6} - \frac{1}{6} + \left(
-        \left(\frac{27}{2} - \frac{81}{8}\right) - \left(\frac{8}{2} - \frac{16}{8}\right)
-      \right)\\
-      &= \frac{8}{3}\,.
-  \end{align*}
-
-  \begin{align*}
-    \operatorname{E}[Y^2] = \int_0^1 y^2\dif y
-       = \left[\frac{y^3}{3}\right]^1_0
-       = \frac{1}{3}\,.
-  \end{align*}
-
-  Ahora necesitamos \(\operatorname{E}[X \mid Y]\) y \(\operatorname{E}[Y \mid X]\).
-  \begin{align*}
-    \operatorname{E}[X \mid Y] = \int x f_{x\mid y} \dif x = \int_{y}^{y+2} x/2 \dif x = \big[x^2\big]^{y+2}_y = 1 +y \quad \text{para } 0 < y < 1. 
-  \end{align*}
-
-  \begin{align*}
-    \operatorname{E}[Y \mid X] = \int y f_{y\mid x} \dif y = \begin{dcases}
-      \int_0^x y\frac{1}{x} \dif y = \frac{1}{x}\left[\frac{y^2}{2}\right]^x_0 = \frac{x}{2} & \text{para } 0 < x < 1,\\
-      \int_0^1 y \dif y = \left[\frac{y^2}{2}\right]_0^1 = \frac{1}{2}  & \text{para } 1 < x < 2,\\
-      \int_0^x y\frac{1}{3-x} \dif y = \frac{1}{3-x}\left[\frac{y^2}{2}\right]_{x-2}^1 = \frac{x-1}{2} & \text{para } 2 < x < 3.
-    \end{dcases}
-  \end{align*}
-
-  Una vez obtenidas dichas esperanzas podemos calcular \(\operatorname{E}[\operatorname{E}[X \mid Y]^2]\) y \(\operatorname{E}[\operatorname{E}[Y \mid X]^2]\).
-
-  \begin{align*}
-    \operatorname{E}[\operatorname{E}[X \mid Y]^2]
-     = \int_0^1 y^2(1+y) \dif y 
-     = \left[\frac{y^3}{3} + \frac{y^4}{4}\right]_0^1 
-     = \frac{1}{3} + \frac{1}{4} 
-     = \frac{7}{12}.
-  \end{align*}
-
-  \begin{align*}
-    \operatorname{E}[\operatorname{E}[Y \mid X]^2]
-    &= \int_0^1 x^2\frac{x}{2} \dif x 
-     + \int_1^2 x^2\frac{1}{2} \dif x
-     + \int_2^3 x^2\frac{x-1}{2} \dif x\\
-    &= \left[\frac{x^4}{8}\right]_0^1 
-     + \left[\frac{x^3}{6}\right]_1^2 
-     + \left[\frac{x^4}{8} - \frac{x^3}{6}\right]_2^3\\ 
-    &= \frac{1}{3} 
-     + \left(\frac{8}{6} - \frac{1}{6}\right) 
-     + \left(\left(\frac{81}{8} - \frac{27}{6}\right) - \left(\frac{16}{8} - \frac{8}{6}\right)\right)\\ 
-    &= \frac{25}{4}.
-  \end{align*}
+       + \int_2^3 x^2\frac{x-1}{2} \dif x\\
+      &= \left[\frac{x^4}{8}\right]_0^1 
+       + \left[\frac{x^3}{6}\right]_1^2 
+       + \left[\frac{x^4}{8} - \frac{x^3}{6}\right]_2^3\\ 
+      &= \frac{1}{3} 
+       + \left(\frac{8}{6} - \frac{1}{6}\right) 
+       + \left(\left(\frac{81}{8} - \frac{27}{6}\right) - \left(\frac{16}{8} - \frac{8}{6}\right)\right)\\ 
+      &= \frac{25}{4}.
+    \end{align*}
+  \end{enumerate}
 
   En consecuencia, el error cuadrático medio obtenido al estimar \(X\) a partir de \(Y\) es 
   \[
