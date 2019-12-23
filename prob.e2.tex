@@ -187,6 +187,7 @@
     \item Las esperanzas \(\operatorname{E}[X^2]\) y \(\operatorname{E}[Y^2]\).
     \item Las esperanzas condicionadas \(\operatorname{E}[X / Y]\) y \(\operatorname{E}[Y / X]\).
     \item Las esperanzas \(\operatorname{E}[\operatorname{E}[X / Y]^2]\) y \(\operatorname{E}[\operatorname{E}[Y / X]^2]\).
+    \item Las razones de correlación \(\eta_{X/Y}^2\) y \(\eta_{Y/X}^2\) para determinar qué ajuste es mejor.
   \end{enumerate}
 
   Vayamos paso por paso.
@@ -282,7 +283,6 @@
         \int_2^3 \left(\frac{x-1}{2}\right)^2 \frac{3-x}{2} \dif x\\
       &= \frac{1}{32} + \frac{1}{8} + \frac{11}{96} = \frac{13}{48}
     \end{align*}
-  \end{enumerate}
 
   Por tanto, el error cuadrático medio obtenido al estimar \(X\) a partir de \(Y\) es 
   \[
@@ -292,6 +292,38 @@
   \[
     \operatorname{ECM}(\psi(X)) = \operatorname{E}[Y^2] - \operatorname{E}[\operatorname{E}[Y/ X]^2] = \frac{1}{3} - \frac{13}{48} = \frac{1}{16} = 0.0625
   \]
+  
+  \item Calculamos primero las esperanzas de X e Y, que necesitaremos posteriormente para calcular las razones de correlación:
+    \begin{align*}
+      \operatorname{E}[X]\\
+      &= \int_0^3 x f_X(x)\dif x\\
+      &= \int_0^1 x \frac{x}{2} \dif x +
+         \int_1^2 x \frac{1}{2} \dif x +
+         \int_2^3 x \frac{3-x}{2} \dif x\\
+      &= \frac{1}{6} + \frac{3}{4} + \frac{7}{12}
+      = \frac{3}{2}
+    \end{align*}
+    
+    \begin{align*}
+     \operatorname{E}[Y]\\
+      &= \int_0^1 y f_Y(y)\dif y\\
+      &= \int_0^1 y \dif y\\
+      &= \frac{1}{2}
+    \end{align*}
+  
+  Ahora podemos calcular las razones de correlación:
+     \begin{align*}
+       \eta_{X/Y}^2 = 1 - \frac{ECM(\varphi(Y))}{\operatorname{Var}[X]} = 1 - \frac{ECM(\varphi(Y))}{\operatorname{E}[X^2]-\operatorname{E}[X]^2}
+       = 1 - \frac{\frac{13}{12}}{\frac{8}{3}-\left(\frac{3}{2}\right)^2} = \frac{-8}{5} ???
+     \end{align*}
+     
+     \begin{align*}
+       \eta_{Y/X}^2 = 1 - \frac{ECM(\psi(X))}{\operatorname{Var}[Y]} = 1 - \frac{ECM(\psi(X))}{\operatorname{E}[Y^2]-\operatorname{E}[Y]^2} = 1 - \frac{\frac{1}{16}}{\frac{1}{3}-\left(\frac{1}{2}\right)^2} = \frac{1}{4} = 0.25
+     \end{align*}
+     
+   La predicción más fiable es la que tiene una mayor razón de correlación.
+
+  \end{enumerate}
 \end{sol}
 
 \end{document}
